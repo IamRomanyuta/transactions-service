@@ -14,4 +14,11 @@ export class UserBalanceRepository {
       where: { userId },
     });
   }
+
+  async update(userId: number, updateData: Partial<UserBalance>): Promise<void> {
+    const result = await this.userBalanceRepo.update({ userId }, updateData);
+    if (result.affected === 0) {
+      throw new Error(`Failed to update balance for user with ID: ${userId}`);
+    }
+  }
 }
